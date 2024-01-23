@@ -122,7 +122,7 @@ def delete_review(review_id):
         return make_response(jsonify({'error': 'Review not found'}), 404)
 
     else:
-         #check if the user is logged in to update the review
+         #check if the user is logged in to delete the review
         if existing_review.user_id == get_jwt_identity():
             # Delete the review
             db.session.delete(existing_review)

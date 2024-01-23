@@ -12,7 +12,7 @@ export default function ReviewProvider({children}) {
     fetch("/reviews")
       .then((res) => res.json())
       .then((response) => {
-        setRestaurantPizzas(response);
+        setReview(response);
       });
     }, [onchange]);
 
@@ -65,7 +65,7 @@ export default function ReviewProvider({children}) {
         setOnchange(!onChange);
       });
 
-
+    }
 
       // Delete a review for a pet store
   function deleteReview(reviewId) {
@@ -100,7 +100,7 @@ export default function ReviewProvider({children}) {
   });
 }
 
-  const contextData = {
+const contextData = {
     setOnchange,
     onChange,
     reviews,
@@ -110,8 +110,8 @@ export default function ReviewProvider({children}) {
     updateReview
 
   }
-  }
-  return (
+  
+return (
     <ReviewContext.Provider value={contextData}>
       {children}
     </ReviewContext.Provider>
