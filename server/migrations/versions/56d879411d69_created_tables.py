@@ -1,8 +1,8 @@
-"""create users,pets,reviews and petstores tables
+"""created tables
 
-Revision ID: 155c4f7e38e2
+Revision ID: 56d879411d69
 Revises: 
-Create Date: 2024-01-22 15:25:20.318525
+Create Date: 2024-01-23 11:55:50.005326
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '155c4f7e38e2'
+revision = '56d879411d69'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -33,6 +33,7 @@ def upgrade():
     sa.Column('username', sa.String(length=255), nullable=False),
     sa.Column('email', sa.String(), nullable=False),
     sa.Column('phone_number', sa.Integer(), nullable=False),
+    sa.Column('profile_image_url', sa.String(), nullable=True),
     sa.Column('password', sa.String(length=450), nullable=False),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
@@ -41,9 +42,10 @@ def upgrade():
     op.create_table('pets',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=255), nullable=False),
-    sa.Column('species', sa.String(length=255), nullable=False),
+    sa.Column('gender', sa.String(), nullable=False),
     sa.Column('price', sa.Integer(), nullable=False),
     sa.Column('age', sa.Integer(), nullable=False),
+    sa.Column('image_url', sa.String(), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('pet_store_id', sa.Integer(), nullable=False),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),

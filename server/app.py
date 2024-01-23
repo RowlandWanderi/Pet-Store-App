@@ -4,14 +4,15 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
 
-# from views import *
+from views import *
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.sqlite"
 db.init_app(app)
 migrate = Migrate(app, db)
 
-
+app.register_blueprint(pet_store_bp)
+app.register_blueprint(review_bp)
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)

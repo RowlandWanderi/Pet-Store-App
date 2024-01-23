@@ -11,6 +11,7 @@ class User(db.Model):
     username = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String, nullable=False)
     phone_number = db.Column(db.Integer, nullable=False)
+    profile_image_url = db.Column(db.String, nullable=True)  # Image URL
     password = db.Column(db.String(450), unique=False, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
@@ -42,9 +43,10 @@ class Pet(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
-    species = db.Column(db.String(255), nullable=False)
+    gender = db.Column(db.String, nullable=False)
     price = db.Column(db.Integer, nullable=False)
     age = db.Column(db.Integer, nullable=False)
+    image_url = db.Column(db.String, nullable=True)  # Image URL column
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     pet_store_id = db.Column(db.Integer, db.ForeignKey('pet_stores.id'), nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
