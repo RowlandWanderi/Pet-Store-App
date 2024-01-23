@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import validates
+from datetime import datetime
 
 db = SQLAlchemy()
 
@@ -37,6 +38,13 @@ class User(db.Model):
             raise ValueError("Invalid phone number. Must be a numeric value with 10 digits.")
         return phone_number
     
+    
+#   For Logout JWT Block List
+class TokenBlocklist(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    jti =  db.Column(db.String(100),nullable=True)
+    created_at = db.Column(db.DateTime(), default=datetime.utcnow)
+
 class Pet(db.Model):
     
     __tablename__ = 'pets'

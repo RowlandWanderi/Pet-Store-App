@@ -10,10 +10,11 @@ user_bp = Blueprint('user_bp', __name__)
 @user_bp.route("/users", methods=["POST"])
 def create_user():
     data = request.get_json()
+    
     username = data["username"]
     email = data["email"]
     phone_number = data["phone_number"]
-    profile_image_url = ["profile_image_url"]
+    profile_image_url = data["profile_image_url"]
     password = generate_password_hash(data["password"], )
     
     check_username = User.query.filter_by(username = username).first()

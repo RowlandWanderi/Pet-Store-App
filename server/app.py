@@ -16,12 +16,14 @@ migrate = Migrate(app, db)
 app.register_blueprint(pet_store_bp)
 app.register_blueprint(review_bp)
 app.register_blueprint(user_bp)
+app.register_blueprint(auth_bp)
 
 jwt = JWTManager()
 app.config["JWT_SECRET_KEY"] = "fjhjdjhfiskyfvdgvydklvsrfl"
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 jwt.init_app(app)
 
+#JWT loader to make sure we log out the user
 @jwt.token_in_blocklist_loader
 def token_in_blocklist_callback(jwt_header, jwt_data):
     jti = jwt_data['jti']
