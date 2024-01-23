@@ -22,7 +22,7 @@ def get_all_pet_stores():
                 {
                     'id':pet.id,
                     'name':pet.name,
-                    'species':pet.species,
+                    'gender':pet.gender,
                     'price' : pet.price,
                     'age' : pet.age,
                     'image_url': pet.image_url,
@@ -30,8 +30,8 @@ def get_all_pet_stores():
                 for pet in petstore.pets],
             'reviews' : [
                 {
-                    'rating': review.rating,
-                    'comments': review.comments,
+                    'Rating': review.Rating,
+                    'Comments': review.Comments,
                 }
                 for review in petstore.reviews
             ]
@@ -57,7 +57,7 @@ def get_pet_store_by_id(petstore_id):
             {
                 'id': pet.id,
                 'name': pet.name,
-                'species': pet.species,
+                'gender': pet.gender,
                 'price': pet.price,
                 'age': pet.age,
             }
@@ -65,8 +65,8 @@ def get_pet_store_by_id(petstore_id):
         ],
         'reviews': [
             {
-                'rating': review.rating,
-                'comments': review.comments,
+                'Rating': review.Rating,
+                'Comments': review.Comments,
                 'user': {
                     'id': review.user.id,
                     'username': review.user.username,
