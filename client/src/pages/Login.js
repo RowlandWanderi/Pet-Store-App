@@ -23,26 +23,26 @@ export default function Login()
     <div className='container row'>
       <div className='col-md-4'></div>
 
-      <div className='col-md-4 mt-5 card pt-3 pb-4 px-3'>
-        <h3 className='text-center mt-4'>Login</h3>
+      <div className='col-md-4 mt-5 card pt-3 pb-4 px-3 card border-info'>
+        <h6 className='text-center mt-4'>Log into your account!</h6>
+        <br/>
         <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label className="form-label">Username</label>
-          <input value={username} onChange={ e => setUsername(e.target.value)} type="text" className="form-control" />
+          <input placeholder='Username' value={username} onChange={ e => setUsername(e.target.value)} type="text" className="form-control" />
         </div>
-       
+       <br/>
         <div className="mb-3">
-          <label className="form-label">Password</label>
-          <input type="password"  value={password} onChange={ e => setPassword(e.target.value)} className="form-control"/>
+          <input placeholder='Password' type="password"  value={password} onChange={ e => setPassword(e.target.value)} className="form-control"/>
         </div>
-          <button type="submit" className="btn btn-success w-100">Login</button>
-        <div className="mb-3">
-          <h6>
+        <br/>
+          <button type="submit" className="btn btn-primary w-100">Login</button>
+          <div className="mb-3 login-link">
+          <p className='mx-5'>
             Don't have an account?
-            <NavLink className="nav-link active" aria-current="page" to="/register">
-              Sign Up
+            <NavLink className="nav-link active" aria-current="page" to="/login">
+             <span className='text-primary mx-5'>Sign Up</span> 
             </NavLink>
-          </h6>
+          </p>
         </div>
         </form>
       </div>

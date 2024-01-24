@@ -29,33 +29,38 @@ export default function Register() {
   <div className='container row'>
     <div className='col-md-4'></div>
 
-    <div className='col-md-4 mt-5 card pt-3 pb-4 px-3'>
-      <h3 className='text-center mt-4'>Create an Account</h3>
+    <div className='col-md-4 mt-5 card pt-3 pb-4 px-3 card border-info '>
+      <h6 className='text-center mt-4'>Create an Account</h6>
+      <br/>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label className="form-label">Username</label>
-          <input value={username} onChange={ e => setUsername(e.target.value)} type="text" className="form-control" />
+          <input placeholder='Username' value={username} onChange={ e => setUsername(e.target.value)} type="text" className="form-control" />
         </div>
+        <br/>
         <div className="mb-3">
-          <label className="form-label">Email address</label>
-          <input type="email"  value={email} onChange={ e => setEmail(e.target.value)} className="form-control" />
+          <input placeholder='Email' type="email"  value={email} onChange={ e => setEmail(e.target.value)} className="form-control" />
         </div>
+        <br/>
         <div className="mb-3">
-          <label className="form-label">Phone</label>
-          <input type="text"  value={phone_number} onChange={ e => setPhone_number(e.target.value)} className="form-control" />
+          <input placeholder='Contact' type="text"  value={phone_number} onChange={ e => setPhone_number(e.target.value)} className="form-control" />
         </div>
+        <br/>
         <div className="mb-3">
-          <label className="form-label">Password</label>
-          <input type="password"  value={password} onChange={ e => setPassword(e.target.value)} className="form-control"/>
+          <input placeholder='Password' type="password"  value={password} onChange={ e => setPassword(e.target.value)} className="form-control"/>
         </div>
-        <button type="submit" className="btn btn-success w-100">Register</button>
+        <br/>
         <div className="mb-3">
-          <h6>
+          <input placeholder='Confirm Password' type="password"  value={password} onChange={ e => setPassword(e.target.value)} className="form-control"/>
+        </div>
+        <br/>
+        <button type="submit" className="btn btn-primary w-100">Register</button>
+        <div className="mb-3 login-link">
+          <p className='mx-5'>
             Already have an account?
             <NavLink className="nav-link active" aria-current="page" to="/login">
-              Login
+             <span className='text-primary mx-5'>Login</span> 
             </NavLink>
-          </h6>
+          </p>
         </div>
       </form>
     </div>
