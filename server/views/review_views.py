@@ -1,10 +1,13 @@
 from models import db,Review,User,PetStore
 from flask import Blueprint, jsonify, request,make_response
+from flask_jwt_extended import  jwt_required, get_jwt_identity
+
 
 review_bp = Blueprint('review_bp', __name__)
 
 #fetch all reviews 
 @review_bp.route('/reviews', methods=['GET'])
+
 def get_all_reviews():
     reviews = Review.query.all()
     reviews_data = [
@@ -29,6 +32,7 @@ def get_all_reviews():
 
 # Create a new review for a pet store
 @review_bp.route('/reviews', methods=['POST'])
+@jwt_required()
 def create_review():
     data = request.form
 
@@ -38,7 +42,7 @@ def create_review():
 
     Rating = data['Rating']
     Comments = data['Comments']
-    user_id = data['user_id']
+    user_id = get_jwt_identity()
     pet_store_id = data['pet_store_id']
 
     # Check if the user and pet store exist
@@ -67,6 +71,7 @@ def create_review():
 
 # Update a review for a pet store
 @review_bp.route('/reviews/<int:review_id>', methods=['PUT'])
+@jwt_required()
 def update_review(review_id):
     data = request.form
 
@@ -83,23 +88,32 @@ def update_review(review_id):
     if not existing_review:
         return make_response(jsonify({'error': 'Review not found'}), 404)
 
-    # Update the review
-    existing_review.Rating = Rating
-    existing_review.Comments = Comments
-    db.session.commit()
+    else:
+        #check if the user is logged in to update the review
+        if existing_review.user_id == get_jwt_identity():
+            # Update the review
+            existing_review.Rating = Rating
+            existing_review.Comments = Comments
+            db.session.commit()
 
-    response_data = {
-        'id': existing_review.id,
-        'Rating': existing_review.Rating,
-        'Comments': existing_review.Comments,
-        'pet_store_name': existing_review.pet_store.name,
-        'user_username': existing_review.user.username,
-    }
+            response_data = {
+                'id': existing_review.id,
+                'Rating': existing_review.Rating,
+                'Comments': existing_review.Comments,
+                'pet_store_name': existing_review.pet_store.name,
+                'user_username': existing_review.user.username,
+            }
 
-    return make_response(jsonify(response_data), 200)
+            return make_response(jsonify(response_data), 200)
+        
+        else:
+            return jsonify({"error": "You are trying to update someone's review!"}), 404
+        
+    
 
 # Delete a review for a pet store
 @review_bp.route('/reviews/<int:review_id>', methods=['DELETE'])
+@jwt_required()
 def delete_review(review_id):
     # Check if the review exists
     existing_review = Review.query.get(review_id)
@@ -107,8 +121,14 @@ def delete_review(review_id):
     if not existing_review:
         return make_response(jsonify({'error': 'Review not found'}), 404)
 
-    # Delete the review
-    db.session.delete(existing_review)
-    db.session.commit()
+    else:
+         #check if the user is logged in to delete the review
+        if existing_review.user_id == get_jwt_identity():
+            # Delete the review
+            db.session.delete(existing_review)
+            db.session.commit()
 
-    return make_response(jsonify({'message': 'Review deleted successfully'}), 200)
+            return make_response(jsonify({'message': 'Review deleted successfully'}), 200)
+        else:
+            return jsonify({"error": "You are trying to delete someone's review!"}), 404
+        
