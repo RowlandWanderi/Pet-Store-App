@@ -6,6 +6,8 @@ import Profile from "./pages/Profile"
 import Register from "./pages/Register"
 import Single_pet from "./pages/Single_pet"
 
+import UserProvider from "./context/UserContext"
+
 function App() {
   return (
     <BrowserRouter>
@@ -16,10 +18,10 @@ function App() {
             <Routes>
               <Route path="/" element={<Layout />}>
                 <Route index element={<Home />} />
-                <Route path="" element ={<Login />} />
+                <Route path="login" element ={<Login />} />
                 <Route path="" element ={<Pets />} />
                 <Route path="" element ={<Profile />} />
-                <Route path="" element ={<Register />} />
+                <Route path="register" element ={<Register />} />
                 <Route path="" element ={<Single_pet />} />
               </Route>
             </Routes>

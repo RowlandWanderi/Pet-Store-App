@@ -6,7 +6,7 @@ from werkzeug.security import generate_password_hash
 user_bp = Blueprint('user_bp', __name__)
 
 # Create a user
-@user_bp.route("/users", methods=["POST"])
+@user_bp.route("/register", methods=["POST"])
 def create_user():
     data = request.get_json()
     username = data["username"]
@@ -21,8 +21,8 @@ def create_user():
     check_phone_number = User.query.filter_by(phone_number = phone_number ).first()
     
     if check_username or check_email or check_phone_number:
-        return jsonify({"error": "User email/username/phone_number already exists!"})
-    
+        conflicting_field = "username" if check_username else "email" if check_email else "phone_number"
+        return jsonify({"error": f"{conflicting_field} already exists!"}), 409    
     else:
         new_user = User(email = email, password = password, username = username, phone_number = phone_number, profile_image_url = profile_image_url)
         db.session.add(new_user)
