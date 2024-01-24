@@ -8,6 +8,8 @@ export default function ReviewProvider({children}) {
   const [reviews, setReview] = useState([])
   const [onChange, setOnchange] = useState(false)
 
+  const authToken = sessionStorage.getItem("authToken")
+
   // fetch reviews
   useEffect(() => {
     fetch("/reviews")
@@ -17,18 +19,22 @@ export default function ReviewProvider({children}) {
       });
     }, []);
 
-    //Create a new review for a pet store
-    function addReview(Rating,Comments,user_id,pet_store_id){
+
+
+//Create a new review for a pet store
+    function addReview(Rating,Comments,pet_store_id){
       fetch("/reviews", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${authToken && authToken}`
         },
-        body: JSON.stringify({Rating,Comments,user_id,pet_store_id}),
+        body: JSON.stringify({Rating,Comments,pet_store_id}),
+
       })
         .then((res) => res.json())
         .then(() => {
-
+          
           swal.fire({
             position: "top-end",
             icon: "success",
@@ -42,12 +48,16 @@ export default function ReviewProvider({children}) {
         });
     }
 
-    // Update a review for a pet store
+
+
+
+// Update a review for a pet store
   function updateReview(reviewId, newRating, newComments) {
     fetch(`/reviews/${reviewId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        "Authorization": `Bearer ${authToken && authToken}`
       },
       body: JSON.stringify({ Rating: newRating, Comments: newComments }),
     })
@@ -68,7 +78,10 @@ export default function ReviewProvider({children}) {
 
     }
 
-      // Delete a review for a pet store
+
+
+
+ // Delete a review for a pet store
   function deleteReview(reviewId) {
   // Display a confirmation dialog using Swal.fire
   swal.fire({
@@ -84,9 +97,14 @@ export default function ReviewProvider({children}) {
       // If user confirms, proceed to delete the review
       fetch(`/reviews/${reviewId}`, {
         method: 'DELETE',
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${authToken && authToken}`
+        },
       })
         .then((res) => res.json())
-        .then(() => {
+        .then((response) => {
+          if(response.success){ 
           // Display success message
           swal.fire({
             title: 'Deleted!',
@@ -96,10 +114,36 @@ export default function ReviewProvider({children}) {
 
           // After deleting a review, trigger a change to refresh the list
           setOnchange(!onChange);
+        }
+        else if(response.error){
+          swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: response.error,
+            showConfirmButton: false,
+            timer: 1500
+            });
+
+            setOnchange(!onchange)
+        }
+        else{
+          swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Something went wrong!",
+              showConfirmButton: false,
+              timer: 1500
+              });
+  
+              setOnchange(!onchange)
+      }
         });
     }
   });
 }
+
+
+
 
 const contextData = {
     setOnchange,

@@ -21,7 +21,7 @@ def get_all_reviews():
                 'username': review.user.username,
                 'email': review.user.email,
                 'phone_number': review.user.phone_number,
-            }
+            }if review.user else None
         }
         for review in reviews
     ]
@@ -128,7 +128,7 @@ def delete_review(review_id):
             db.session.delete(existing_review)
             db.session.commit()
 
-            return make_response(jsonify({'message': 'Review deleted successfully'}), 200)
+            return (jsonify({'success': 'Review deleted successfully'}), 200)
         else:
             return jsonify({"error": "You are trying to delete someone's review!"}), 404
         

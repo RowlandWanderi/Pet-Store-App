@@ -1,10 +1,12 @@
 import React, { createContext, useEffect, useState } from 'react';
 
-const PetContext = createContext();
+export const PetContext = createContext();
 
 export default function PetProvider({ children }) {
     const [pets, setPets] = useState([]);
     const [selectedPet, setSelectedPet] = useState(null);
+    const [onChange , setOnChange] = useState(false)
+
 
     useEffect(() => {
         console.log('Fetching pets...');
@@ -15,7 +17,7 @@ export default function PetProvider({ children }) {
                 setPets(data);
             })
             .catch((error) => console.error('Error fetching pets:', error));
-    }, []);
+    }, [onChange]);
 
     const fetchPetById = (id) => {
         console.log(`Fetching pet with ID ${id}...`);
@@ -32,9 +34,16 @@ export default function PetProvider({ children }) {
             })
             .catch((error) => console.error(`Error fetching pet with ID ${id}:`, error));
     };
+    const contextData = {
+        pets,
+        selectedPet,
+        fetchPetById,
+        onChange,
+        setOnChange,
+    }
 
     return (
-        <PetContext.Provider value={{ pets, selectedPet, fetchPetById }}>
+        <PetContext.Provider value={contextData}>
             {children}
         </PetContext.Provider>
     );

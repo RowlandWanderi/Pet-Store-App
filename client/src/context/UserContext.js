@@ -4,25 +4,23 @@ import {useNavigate} from "react-router-dom"
 
 export const UserContext = createContext();
 
-
-
 export default function UserProvider({children}) 
 {
     const [onchange, setOnchange] = useState(false)
     const [authToken, setAuthToken] = useState(()=> sessionStorage.getItem("authToken")? sessionStorage.getItem("authToken"): null )
     const [currentUser, setCurrentUser] = useState(null)
 
-     const navigate = useNavigate()
+    const navigate = useNavigate()
 
     // add user
-    function addUser(username,email,phone_number,profile_image_url, password)
+    function addUser(username, email, phone_number, password)
     {
-        fetch("/users",{
+        fetch("/register",{
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({username,email,phone_number,profile_image_url, password })
+            body: JSON.stringify({username, email, phone_number, password })
 
         }
         )
@@ -36,7 +34,7 @@ export default function UserProvider({children})
                 Swal.fire({
                 position: "center",
                 icon: "success",
-                title: response.success,
+                title: "Account created successfully!",
                 showConfirmButton: false,
                 timer: 1500
                 });
@@ -58,7 +56,7 @@ export default function UserProvider({children})
     }
 
         // Update user
-        function updateUser(username,email,phone_number,profile_image_url)
+        function updateUser(username,email,phone_number)
         {
             fetch("/users",{
                 method: "PUT",
@@ -66,7 +64,7 @@ export default function UserProvider({children})
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${authToken}`
                 },
-                body: JSON.stringify({username,email,phone_number,profile_image_url })
+                body: JSON.stringify({username,email,phone_number })
     
             }
             )
@@ -78,7 +76,7 @@ export default function UserProvider({children})
                     Swal.fire({
                     position: "center",
                     icon: "success",
-                    title: response.success,
+                    title: "Update successful!",
                     showConfirmButton: false,
                     timer: 1500
                     });
@@ -107,23 +105,23 @@ export default function UserProvider({children})
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({username,password })
+            body: JSON.stringify({username, password})
 
         }
         )
         .then(res => res.json())
         .then(response => {
-            console.log("Login Response:", response);
+            
             if (response.access_token)
             {
                 sessionStorage.setItem("authToken", response.access_token);
                 setAuthToken(response.access_token)
 
-                navigate("/")
+                navigate("/petstores")
                 Swal.fire({
                 position: "center",
                 icon: "success",
-                title: "Login success",
+                title: "Login successful!",
                 showConfirmButton: false,
                 timer: 1500
                 });
@@ -146,7 +144,7 @@ export default function UserProvider({children})
     }
 
         // DELETE  user account
-        function delete_your_account()
+        function deleteAccount()
         {
             fetch("/users",{
                 method: "DELETE",
@@ -166,7 +164,7 @@ export default function UserProvider({children})
                     Swal.fire({
                     position: "center",
                     icon: "success",
-                    title: response.success,
+                    title: "Account deleted!",
                     showConfirmButton: false,
                     timer: 1500
                     });
@@ -198,7 +196,7 @@ export default function UserProvider({children})
         Swal.fire({
             position: "center",
             icon: "success",
-            title: "Logout success",
+            title: "Logout successful!",
             showConfirmButton: false,
             timer: 1000
             });
@@ -206,51 +204,46 @@ export default function UserProvider({children})
     }
     
     // Get Authenticated user
-    useEffect(() => {
-        if (authToken) {
-            console.log("Debug: AuthToken Exists - Fetching Authenticated User");
-            fetch("/authenticated_user", {
-                method: "GET",
-                headers: {
-                    Accept: "application/json",
-                    Authorization: `Bearer ${authToken}`,
-                },
+    useEffect(()=>{
+        if(authToken)
+        {
+            fetch("/authenticated_user",{
+            method: "GET",
+            headers: {
+                Accept: "application/json",
+                Authorization: `Bearer ${authToken}`
+            }
             })
-            .then((res) => res.json())
-            .then((response) => {
-                console.log("Debug: Authenticated User Response", response);
-    
-                if (response.email || response.username) {
-                    setCurrentUser(response);
-                } else {
-                    setCurrentUser(null);
+            .then(res => res.json())
+            .then(response => {
+                if(response.email || response.username){
+                    setCurrentUser(response)
+                }
+                else{
+                    setCurrentUser(null)
                 }
             })
-            .catch((error) => {
-                console.error("Error Fetching Authenticated User:", error);
-                setCurrentUser(null);
-            });
         }
-    }, [authToken, onchange]);
+    
+
+    }, [authToken, onchange])
+
     console.log("current user", currentUser)
 
 
-
-    // context data
     const contextData = {
         addUser,
         login,
         updateUser,
         logout,
         currentUser,
-        delete_your_account
-
-        // pass all your variables and function
+        deleteAccount
     }
 
   return (
     <UserContext.Provider value={contextData} >
        {children}
     </UserContext.Provider>
+    
   )
 }

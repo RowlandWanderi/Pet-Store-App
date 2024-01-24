@@ -40,7 +40,7 @@ def authenticated_user():
         user_data = {
             'id': user.id,
             'username':user.username,
-            'phone': user.phone,
+            'phone_number': user.phone,
             'email': user.email
         }
         return jsonify(user_data), 200

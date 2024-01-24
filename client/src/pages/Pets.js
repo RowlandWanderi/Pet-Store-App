@@ -1,7 +1,135 @@
-import React from 'react'
+import React, {useContext, useEffect, useState} from 'react'
+import { Link, useParams } from 'react-router-dom'
+import { PetStoreContext } from '../context/PetStoreContext'
+import {ReviewContext} from '../context/ReviewContext'
+import {UserContext} from '../context/UserContext'
 
 export default function Pets() {
-  return (
-    <div>Pets</div>
-  )
+
+  const {id} = useParams()
+
+  const [petstore, setPetStore] = useState([])
+  const [Rating, setRating] = useState("")
+  const [Comments, setComments] = useState("")
+
+  const {petstores} = useContext(PetStoreContext)
+  const {currentUser} = useContext(UserContext)
+  const {addReview,deleteReview} = useContext(ReviewContext)
+
+
+  useEffect(() => {
+    const store = petstores.find((petstore) => {
+      return petstore.id === parseInt(id);
+    });
+    setPetStore(store);
+  }, [id, petstores]);
+
+  
+const handleSubmit = (e) =>{
+  e.preventDefault();
+
+  addReview(Rating,Comments,petstore.id)
+
+  //clear form
+  setRating('')
+  setComments('')
+
+
 }
+
+  return (
+    <div className='container ms-5'>
+      <h1 className='text-center mt-5'>{petstore.name} Pet Store</h1>
+      <h2 className='text-center mt-5'>Pets Available</h2>
+      <div className='container row'>
+        {petstore && petstore.pets &&
+          petstore.pets.map((pet) => (
+            <div className=' ui card col-md-3 mb-3' key={pet.id}>
+              
+                <img src={pet.image_url} alt='Loading' className='img-fluid' />
+              
+              <div className='card-body'>
+                <h5 className='card-title'>{pet.name}</h5>
+                <p className='card-text'>$ &nbsp;{pet.price}.00</p>
+                <Link to={`/singlepet/${pet.id}`}>
+                  <button type="button" className="btn btn-primary">View Pet</button>
+                </Link>
+              </div>
+            </div>
+          ))}
+      </div>
+
+
+      {/*Leave a review form */}
+
+      <div className='mt-4'>
+
+      <form onSubmit={handleSubmit}>
+            <div className="form-group row">
+              <label className="col-sm-2 col-form-label">Rating</label>
+              <div className="col-sm-10">
+              <input type="number" value={Rating} onChange={(e)=>setRating(e.target.value)} className="form-control" required placeholder="Type here" > 
+            </input>
+              </div>
+            </div>
+            <div className="form-group row">
+              <label className="col-sm-2 col-form-label">Comments</label>
+              <div className="col-sm-10">
+              <input type="text" value={Comments} onChange={(e)=>setComments(e.target.value)} className="form-control" rows={3} required placeholder="Type here" > 
+            </input>
+              </div>
+            </div>
+            <div className="form-group row">
+              <div className="col-sm-10 mt-3">
+              {currentUser?
+              <button type="submit" className="btn btn-success">Submit Review</button>
+               :
+               <p className='text-secondary'>Login to submit a Review</p>
+              }
+              </div>
+            </div>
+
+      </form>
+
+
+
+      {/* Reviews Section */}
+      <div className='mt-5'>
+        <h2 className='text-center'>Store Reviews</h2>
+        <div className='container'>
+          {petstore && petstore.reviews &&
+            petstore.reviews.map((review) => (
+              <div key={review.id} className='card mb-3'>
+                <div className='card-body'>
+                  <h5 className='card-title'>Rating: {review.Rating}</h5>
+                  <p className='card-text'>Comments: {review.Comments}</p>
+                  { (currentUser && currentUser.id)===(review && review.user && review.user.id) &&
+                    <button onClick={()=>deleteReview(review.id)} type="button" className="btn btn-danger btn-sm">Delete Review</button>
+                  }
+                    <span className='fw-bold'>
+                      <p className='card-text'>Username: {review && review.user && review.user.username}</p>
+                      <p className='card-text'>Email: {review && review.user && review.user.username}</p>
+                    </span>
+                  
+                </div>
+              </div>
+            ))}
+        </div>
+      </div>
+
+      {/*Pet store information*/}
+      <div className="d-flex flex-column ">
+                  <h3 className='text-center'>PetStore Information:</h3>
+                  <hr></hr>
+                  <h4 className='text-center'>See a fluffy friend you like? You can contact the store at:</h4>
+                      <p className='text-center'>
+                        <strong>Phone Number:</strong> {petstore.phone_number}
+                      </p>
+                      <p className='text-center'>
+                        <strong>Email:</strong> {petstore.email}
+                      </p>
+                </div>
+    </div>
+    </div>
+  );
+          }

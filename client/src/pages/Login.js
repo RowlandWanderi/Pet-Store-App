@@ -1,21 +1,20 @@
 import React, {useContext, useState} from 'react'
 import { UserContext } from '../context/UserContext'
+import { NavLink } from 'react-router-dom'
 
 export default function Login() 
 {
   const {login} = useContext(UserContext)
 
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
+  const [username, setUsername] = useState()
+  const [password, setPassword] = useState()
 
 
-  const handleSubmit = (e)=>{
-    e.preventDefault()
+  const handleSubmit = (event)=>{
+    event.preventDefault()
 
-    // call your useContext function
     login(username, password)
-     
-    // Clear your form
+    
     setUsername("")
     setPassword("")
   }
@@ -37,6 +36,14 @@ export default function Login()
           <input type="password"  value={password} onChange={ e => setPassword(e.target.value)} className="form-control"/>
         </div>
           <button type="submit" className="btn btn-success w-100">Login</button>
+        <div className="mb-3">
+          <h6>
+            Don't have an account?
+            <NavLink className="nav-link active" aria-current="page" to="/register">
+              Sign Up
+            </NavLink>
+          </h6>
+        </div>
         </form>
       </div>
 
