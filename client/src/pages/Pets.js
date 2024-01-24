@@ -45,9 +45,7 @@ const handleSubmit = (e) =>{
         {petstore && petstore.pets &&
           petstore.pets.map((pet) => (
             <div className=' ui card col-md-3 mb-3' key={pet.id}>
-              
-                <img src={pet.image_url} alt='Loading' className='img-fluid' />
-              
+               <img src={pet.image_url} alt='Loading' className='img-fluid' />
               <div className='card-body'>
                 <h5 className='card-title'>Name: {pet.name}</h5>
                 <p className='card-text'>Price: $ &nbsp;{pet.price}.00</p>
