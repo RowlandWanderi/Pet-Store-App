@@ -35,6 +35,14 @@ export default function Login()
           <input type="password"  value={password} onChange={ e => setPassword(e.target.value)} className="form-control"/>
         </div>
           <button type="submit" className="btn btn-success w-100">Login</button>
+        <div className="mb-3">
+          <h6>
+            Don't have an account?
+            <NavLink className="nav-link active" aria-current="page" to="/register">
+              Sign Up
+            </NavLink>
+          </h6>
+        </div>
         </form>
       </div>
 

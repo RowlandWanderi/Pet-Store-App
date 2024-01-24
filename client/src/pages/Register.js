@@ -1,5 +1,6 @@
 import React, {useContext, useState} from 'react'
 import { UserContext } from '../context/UserContext'
+import { Link } from 'react-router-dom'
 
 export default function Register() {
 
@@ -29,7 +30,7 @@ export default function Register() {
     <div className='col-md-4'></div>
 
     <div className='col-md-4 mt-5 card pt-3 pb-4 px-3'>
-      <h3 className='text-center mt-4'>Register</h3>
+      <h3 className='text-center mt-4'>Create an Account</h3>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label className="form-label">Username</label>
@@ -48,6 +49,14 @@ export default function Register() {
           <input type="password"  value={password} onChange={ e => setPassword(e.target.value)} className="form-control"/>
         </div>
         <button type="submit" className="btn btn-success w-100">Register</button>
+        <div className="mb-3">
+          <h6>
+            Already have an account?
+            <NavLink className="nav-link active" aria-current="page" to="/login">
+              Login
+            </NavLink>
+          </h6>
+        </div>
       </form>
     </div>
     <div className='col-md-4'></div>
