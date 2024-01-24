@@ -38,7 +38,7 @@ const handleSubmit = (e) =>{
 }
 
   return (
-    <div className='container ms-5'>
+    <div className='container ms-2'>
       <h1 className='text-center mt-5'>{petstore.name} Pet Store</h1>
       <h2 className='text-center mt-5'>Pets Available</h2>
       <div className='container row'>
@@ -49,8 +49,8 @@ const handleSubmit = (e) =>{
                 <img src={pet.image_url} alt='Loading' className='img-fluid' />
               
               <div className='card-body'>
-                <h5 className='card-title'>{pet.name}</h5>
-                <p className='card-text'>$ &nbsp;{pet.price}.00</p>
+                <h5 className='card-title'>Name: {pet.name}</h5>
+                <p className='card-text'>Price: $ &nbsp;{pet.price}.00</p>
                 <Link to={`/singlepet/${pet.id}`}>
                   <button type="button" className="btn btn-primary">View Pet</button>
                 </Link>
@@ -103,13 +103,16 @@ const handleSubmit = (e) =>{
                 <div className='card-body'>
                   <h5 className='card-title'>Rating: {review.Rating}</h5>
                   <p className='card-text'>Comments: {review.Comments}</p>
+                  {review && review.user && review.user.username &&(
+                      <span className='fw-bold'>
+                        <p className='card-text'>Username: {review.user.username}</p>
+                        <p className='card-text'>Email: {review.user.email}</p>
+                      </span>
+                    )}
                   { (currentUser && currentUser.id)===(review && review.user && review.user.id) &&
                     <button onClick={()=>deleteReview(review.id)} type="button" className="btn btn-danger btn-sm">Delete Review</button>
                   }
-                    <span className='fw-bold'>
-                      <p className='card-text'>Username: {review && review.user && review.user.username}</p>
-                      <p className='card-text'>Email: {review && review.user && review.user.username}</p>
-                    </span>
+                    
                   
                 </div>
               </div>

@@ -9,10 +9,10 @@ user_bp = Blueprint('user_bp', __name__)
 @user_bp.route("/register", methods=["POST"])
 def create_user():
     data = request.get_json()
-    username = data["username"]
-    email = data["email"]
-    phone_number = data["phone_number"]
-    password = generate_password_hash(data["password"], )
+    username = data.get("username")
+    email = data.get("email")
+    phone_number = data.get("phone_number")
+    password = generate_password_hash(data.get("password"), )
     
     profile_image_url = data.get("profile_image_url", "")
     

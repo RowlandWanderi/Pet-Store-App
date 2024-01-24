@@ -37,8 +37,8 @@ export default function Home() {
         <img src={images} className="card-img" alt="Loading Banner"/>
     </div>
 
-    <div className='container bg-info'>
-      <h3 className='my-3'>Pet stores</h3>
+    <div className='container bg-info me-3'>
+      <h2 className=' text-center my-3'>Pet stores</h2>
 
       {petstores &&
         petstores.map((petstore) => (

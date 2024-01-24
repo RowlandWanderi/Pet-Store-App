@@ -37,11 +37,13 @@ export default function Login()
         </div>
           <button type="submit" className="btn btn-success w-100">Login</button>
         <div className="mb-3">
-          <h6>
-            Don't have an account?
-            <NavLink className="nav-link active" aria-current="page" to="/register">
-              Sign Up
-            </NavLink>
+          <h6 className='text-center'>
+            <p className='m-2'>Don't have an account?</p>
+            <button>
+              <NavLink className="nav-link active" aria-current="page" to="/register">
+                Sign Up
+              </NavLink>
+            </button>
           </h6>
         </div>
         </form>

@@ -50,11 +50,14 @@ export default function Register() {
         </div>
         <button type="submit" className="btn btn-success w-100">Register</button>
         <div className="mb-3">
-          <h6>
-            Already have an account?
+          <h6 className='text-center'>
+            <p className='m-2'>Already have an account? </p>
+            <button>
             <NavLink className="nav-link active" aria-current="page" to="/login">
               Login
             </NavLink>
+            </button>
+            
           </h6>
         </div>
       </form>

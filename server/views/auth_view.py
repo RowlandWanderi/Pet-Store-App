@@ -33,14 +33,14 @@ def login():
 @auth_bp.route("/authenticated_user", methods=["GET"])
 @jwt_required()
 def authenticated_user():
-    current_user_id = get_jwt_identity() #getting current user id
+    current_user_id = get_jwt_identity()  # getting current user id
     user = User.query.get(current_user_id)
 
     if user:
         user_data = {
             'id': user.id,
-            'username':user.username,
-            'phone_number': user.phone,
+            'username': user.username,
+            'phone_number': user.phone_number,
             'email': user.email
         }
         return jsonify(user_data), 200

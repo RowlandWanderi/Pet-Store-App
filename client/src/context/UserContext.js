@@ -9,6 +9,8 @@ export default function UserProvider({children})
     const [onchange, setOnchange] = useState(false)
     const [authToken, setAuthToken] = useState(()=> sessionStorage.getItem("authToken")? sessionStorage.getItem("authToken"): null )
     const [currentUser, setCurrentUser] = useState(null)
+   
+    console.log(authToken)
 
     const navigate = useNavigate()
 
@@ -56,7 +58,7 @@ export default function UserProvider({children})
     }
 
         // Update user
-        function updateUser(username,email,phone_number)
+        function updateUser(username,email,phone_number,profile_image_url)
         {
             fetch("/users",{
                 method: "PUT",
@@ -64,7 +66,7 @@ export default function UserProvider({children})
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${authToken}`
                 },
-                body: JSON.stringify({username,email,phone_number })
+                body: JSON.stringify({username,email,phone_number, profile_image_url})
     
             }
             )
@@ -98,50 +100,43 @@ export default function UserProvider({children})
         }
     
     // login user
-    function login(username,password)
-    {
-        fetch("/login",{
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({username, password})
-
+    // login user
+function login(username, password) {
+    fetch("/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, password }),
+    })
+      .then((res) => res.json())
+      .then((response) => {
+        if (response.access_token) {
+          sessionStorage.setItem("authToken", response.access_token);
+          setAuthToken(response.access_token, () => {
+            setOnchange(!onchange);
+          });
+  
+          navigate("/");
+  
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Login successful!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        } else {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: response.error,
+            showConfirmButton: false,
+            timer: 1500,
+          });
         }
-        )
-        .then(res => res.json())
-        .then(response => {
-            
-            if (response.access_token)
-            {
-                sessionStorage.setItem("authToken", response.access_token);
-                setAuthToken(response.access_token)
-
-                navigate("/petstores")
-                Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "Login successful!",
-                showConfirmButton: false,
-                timer: 1500
-                });
-
-                setOnchange(!onchange)
-            }
-            else{
-                Swal.fire({
-                    position: "center",
-                    icon: "error",
-                    title: response.error,
-                    showConfirmButton: false,
-                    timer: 1500
-                    });
-            }
-
-
-
-        })
-    }
+      });
+  }
 
         // DELETE  user account
         function deleteAccount()
@@ -204,29 +199,30 @@ export default function UserProvider({children})
     }
     
     // Get Authenticated user
-    useEffect(()=>{
-        if(authToken)
-        {
-            fetch("/authenticated_user",{
-            method: "GET",
-            headers: {
-                Accept: "application/json",
-                Authorization: `Bearer ${authToken}`
-            }
-            })
-            .then(res => res.json())
-            .then(response => {
-                if(response.email || response.username){
-                    setCurrentUser(response)
-                }
-                else{
-                    setCurrentUser(null)
+    useEffect(() => {
+        if (authToken) {
+            fetch("/authenticated_user", {
+                method: "GET",
+                headers: {
+                    Accept: "application/json",
+                    Authorization: `Bearer ${authToken}`
                 }
             })
+                .then(res => res.json())
+                .then(response => {
+                    if (response.error) {
+                        // Handle the case when the response contains an "error" key
+                        setCurrentUser(null);
+                    } else {
+                        setCurrentUser(response);
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching authenticated user:", error);
+                
+                });
         }
-    
-
-    }, [authToken, onchange])
+    }, [authToken, onchange]);
 
     console.log("current user", currentUser)
 
