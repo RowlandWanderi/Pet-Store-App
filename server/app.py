@@ -17,6 +17,7 @@ app.register_blueprint(pet_store_bp)
 app.register_blueprint(review_bp)
 app.register_blueprint(user_bp)
 app.register_blueprint(auth_bp)
+app.register_blueprint(pet_bp)
 
 jwt = JWTManager()
 app.config["JWT_SECRET_KEY"] = "fjhjdjhfiskyfvdgvydklvsrfl"

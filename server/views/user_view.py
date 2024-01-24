@@ -9,7 +9,7 @@ user_bp = Blueprint('user_bp', __name__)
 # Create a user
 @user_bp.route("/users", methods=["POST"])
 def create_user():
-    data = request.get_json()
+    data = request.json_get()
     
     username = data["username"]
     email = data["email"]
