@@ -36,37 +36,36 @@ def get_all_reviews():
 def create_review():
     data = request.get_json()
 
-    # Ensure required fields are present in the request
-    if 'Rating' not in data or 'Comments' not in data or 'user_id' not in data or 'pet_store_id' not in data:
-        return make_response(jsonify({'error': 'Missing required fields in the request'}), 400)
+    new_review = Review(
+        Rating = data.get('Rating'),
+        Comments = data.get('Comments'),
+        user_id = get_jwt_identity(),
+        pet_store_id = data.get('pet_store_id')
+        
+    )
 
-    Rating = data('Rating')
-    Comments = data('Comments')
-    user_id = get_jwt_identity()
-    pet_store_id = data('pet_store_id')
-
-    # Check if the user and pet store exist
-    user = User.query.get(user_id)
-    pet_store = PetStore.query.get(pet_store_id)
-
-    if not user or not pet_store:
-        return make_response(jsonify({'error': 'User or pet store not found'}), 404)
-
-    # Create a new review
-    new_review = Review(Rating=Rating, Comments=Comments, user=user, pet_store=pet_store)
     db.session.add(new_review)
     db.session.commit()
+    
+    # Fetch the created review with user information
+    created_review = Review.query.filter_by(id=new_review.id).first()
 
     response_data = {
-        'id': new_review.id,
-        'Rating': new_review.Rating,
-        'Comments': new_review.Comments,
-        'pet_store_id': new_review.pet_store_id,
-        'user_id': new_review.user_id,
-
+        'id': created_review.id,
+        'Rating': created_review.Rating,
+        'Comments': created_review.Comments,
+        'pet_store_id': created_review.pet_store_id,
+        'user': {
+            'id': created_review.user.id,
+            'username': created_review.user.username,
+            'email': created_review.user.email,
+            'phone_number': created_review.user.phone_number,
+        } if created_review.user else None
     }
 
-    return make_response(jsonify(response_data), 201)
+    return jsonify({'message': 'Review created successfully',
+                    'review': response_data
+                    })
 
 
 # Update a review for a pet store
@@ -79,8 +78,8 @@ def update_review(review_id):
     if 'Rating' not in data or 'Comments' not in data:
         return make_response(jsonify({'error': 'Missing required fields in the request'}), 400)
 
-    Rating = data('Rating')
-    Comments = data('Comments')
+    Rating = data.get('Rating')
+    Comments = data.get('Comments')
 
     # Check if the review exists
     existing_review = Review.query.get(review_id)

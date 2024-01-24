@@ -1,4 +1,4 @@
-from models import db, User
+from models import db, User,Review
 from flask import request, jsonify, Blueprint
 from flask_jwt_extended import  jwt_required, get_jwt_identity
 from werkzeug.security import generate_password_hash
@@ -74,7 +74,8 @@ def update_user():
             user.email = email
             user.phone_number = phone_number
             user.profile_image_url = new_profile_image_url
-        
+
+            
             db.session.commit()
             return jsonify({"success": f"{new_username} updated successfully"}), 200
         
@@ -89,6 +90,8 @@ def delete_user():
     user = User.query.get(get_jwt_identity())
     
     if user:
+        
+            
         db.session.delete(user)
         db.session.commit()
         return jsonify({"success": "User deleted successfully"}), 200

@@ -103,10 +103,12 @@ const handleSubmit = (e) =>{
                 <div className='card-body'>
                   <h5 className='card-title'>Rating: {review.Rating}</h5>
                   <p className='card-text'>Comments: {review.Comments}</p>
+                 
                   {review && review.user && review.user.username &&(
                       <span className='fw-bold'>
                         <p className='card-text'>Username: {review.user.username}</p>
                         <p className='card-text'>Email: {review.user.email}</p>
+                        {console.log(review.user)}
                       </span>
                     )}
                   { (currentUser && currentUser.id)===(review && review.user && review.user.id) &&

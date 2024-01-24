@@ -64,7 +64,7 @@ class Review(db.Model):
     __tablename__ = 'reviews'
     
     id = db.Column(db.Integer, primary_key=True)
-    Rating = db.Column(db.Float, nullable=False)
+    Rating = db.Column(db.Integer, nullable=False)
     Comments = db.Column(db.String, nullable=False)
     pet_store_id = db.Column(db.Integer, db.ForeignKey('pet_stores.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
