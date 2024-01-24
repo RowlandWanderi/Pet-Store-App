@@ -63,7 +63,7 @@ const handleSubmit = (e) =>{
       {/*Leave a review form */}
 
       <div className='mt-4'>
-
+        <h2 className='text-center mt-5' >Leave a Review</h2>
       <form onSubmit={handleSubmit}>
             <div className="form-group row">
               <label className="col-sm-2 col-form-label">Rating</label>

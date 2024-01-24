@@ -13,13 +13,13 @@ export default function Footer() {
            We'd be delighted to hear from you. You can find us below on all our social media platforms.
            </p>
            <div className='container row'>
-             <a href="www.linkedin.com/in/rowland-mwangi-54ab901b3" target="_blank" className='col-md-3'>
+             <a href="/" target="_blank" className='col-md-3'>
                <i className="fa fa-linkedin text-light" aria-hidden="true"></i>
              </a>
-             <a href=" https://www.instagram.com/rowland_wanderi/" target="blank" className='col-md-3' >
+             <a href="/" target="blank" className='col-md-3' >
                <i className="fa fa-instagram text-light" aria-hidden="true"></i>
              </a>
-             <a href="https://github.com/RowlandWanderi" target="blank" className='col-md-3'>
+             <a href="/" target="blank" className='col-md-3'>
                <i className="fa fa-github text-light" aria-hidden="true"></i>
              </a>
            </div>
@@ -31,10 +31,10 @@ export default function Footer() {
                <span className="fa-li"><i className="fa fa-home"></i></span><span className="ms-2">Nairobi street, Nairobi, Kenya</span>
              </li>
              <li className="mb-3">
-               <span className="fa-li"><i className="fa fa-envelope"></i></span><span className="ms-2">rowlandswanderi@gmail.com</span>
+               <span className="fa-li"><i className="fa fa-envelope"></i></span><span className="ms-2">pethaven@gmail.com</span>
              </li>
              <li className="mb-3">
-               <span className="fa-li"><i className="fa fa-phone"></i></span><span className="ms-2">+254718074885</span>
+               <span className="fa-li"><i className="fa fa-phone"></i></span><span className="ms-2">+25471747839</span>
              </li>
            </ul>
          </div>
