@@ -1,12 +1,17 @@
 from datetime import timedelta
-from models import db, User,Pet,PetStore,Review
+from models import db, User,Pet,PetStore,Review, TokenBlocklist
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-
-
-from views import *
 from flask_jwt_extended import JWTManager
+import random
+import string
+from views import *
+
+def generate_secret_key(length=32):
+    characters = string.ascii_letters + string.digits
+    secret_key = ''.join(random.choice(characters) for i in range(length))
+    return secret_key
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.sqlite"
@@ -16,10 +21,11 @@ migrate = Migrate(app, db)
 app.register_blueprint(pet_store_bp)
 app.register_blueprint(review_bp)
 app.register_blueprint(user_bp)
+app.register_blueprint(auth_bp)
 
 jwt = JWTManager()
-app.config["JWT_SECRET_KEY"] = "fjhjdjhfiskyfvdgvydklvsrfl"
-app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
+app.config["JWT_SECRET_KEY"] =  generate_secret_key()
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=24)
 jwt.init_app(app)
 
 @jwt.token_in_blocklist_loader

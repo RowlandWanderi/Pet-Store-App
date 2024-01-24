@@ -1,5 +1,4 @@
 from models import db, User
-from app import app
 from flask import request, jsonify, Blueprint
 from flask_jwt_extended import  jwt_required, get_jwt_identity
 from werkzeug.security import generate_password_hash
@@ -13,8 +12,9 @@ def create_user():
     username = data["username"]
     email = data["email"]
     phone_number = data["phone_number"]
-    profile_image_url = ["profile_image_url"]
     password = generate_password_hash(data["password"], )
+    
+    profile_image_url = data.get("profile_image_url", "")
     
     check_username = User.query.filter_by(username = username).first()
     check_email = User.query.filter_by(email = email).first()
@@ -49,7 +49,7 @@ def get_user(id):
         return jsonify({"error": "User not found!"}), 404
     
     
-#Update single user's details
+# Update single user's details
 @user_bp.route("/users", methods = ["PUT"])
 @jwt_required()
 def update_user():
@@ -57,12 +57,12 @@ def update_user():
     data = request.get_json()
     
     if user:
-        username = data['username']
-        email = data['email']
-        phone_number = data['phone_number']
-        profile_image_url = data['profile_image_url']
-
-        check_username = User.query.filter(User.id != get_jwt_identity(), User.username == username).first()
+        new_username = data.get('username', user.username)
+        email = data.get('email', user.email)
+        phone_number = data.get('phone_number', user.phone_number)
+        new_profile_image_url = data.get("profile_image_url", user.profile_image_url)
+        
+        check_username = User.query.filter(User.id != get_jwt_identity(), User.username == new_username).first()
         check_email = User.query.filter(User.id != get_jwt_identity(), User.email == email).first()
         check_phone_number = User.query.filter(User.id != get_jwt_identity(), User.phone_number == phone_number).first()
         
@@ -70,13 +70,13 @@ def update_user():
             return jsonify({"error": "User email/username/phone already exist!"})
 
         else:
-            user.username = username
+            user.username = new_username
             user.email = email
             user.phone_number = phone_number
-            user.profile_image_url = profile_image_url
+            user.profile_image_url = new_profile_image_url
         
             db.session.commit()
-            return jsonify({"success": f"{username} updated successfully"}), 200
+            return jsonify({"success": f"{new_username} updated successfully"}), 200
         
     else:
         return jsonify({"error":"The user you are trying to update does not exist!"}), 404
@@ -93,10 +93,4 @@ def delete_user():
         db.session.commit()
         return jsonify({"success": "User deleted successfully"}), 200
     else:
-        return jsonify({"error": "The User you are trying to delete does not exist"}), 404
-    
-    
-from . import create_app
-app = create_app()
-
-# app.register_blueprint(user_bp)
+        return jsonify({"error": "The user you are trying to delete does not exist"}), 404
