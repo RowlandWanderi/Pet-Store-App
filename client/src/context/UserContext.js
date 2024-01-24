@@ -29,7 +29,7 @@ export default function UserProvider({children})
             
             if (response.success)
             {
-                navigate("/login")
+                navigate("/")
 
                 Swal.fire({
                 position: "center",
@@ -117,7 +117,7 @@ export default function UserProvider({children})
                 sessionStorage.setItem("authToken", response.access_token);
                 setAuthToken(response.access_token)
 
-                navigate("/petstores")
+                navigate("/")
                 Swal.fire({
                 position: "center",
                 icon: "success",

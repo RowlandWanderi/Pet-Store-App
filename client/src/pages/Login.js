@@ -39,7 +39,7 @@ export default function Login()
           <div className="mb-3 login-link">
           <p className='mx-5'>
             Don't have an account?
-            <NavLink className="nav-link active" aria-current="page" to="/login">
+            <NavLink className="nav-link active" aria-current="page" to="/register">
              <span className='text-primary mx-5'>Sign Up</span> 
             </NavLink>
           </p>
