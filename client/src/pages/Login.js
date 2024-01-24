@@ -36,13 +36,13 @@ export default function Login()
         </div>
         <br/>
           <button type="submit" className="btn btn-primary w-100">Login</button>
-          <div className="mb-3 login-link">
-          <p className='mx-5'>
+          <div className="login-link fs-6 d-flex align-items-center ms-5">
+          <p className='fw-lighter text-muted mb-0 me-2 ms-5 mt-2'>
             Don't have an account?
-            <NavLink className="nav-link active" aria-current="page" to="/register">
-             <span className='text-primary mx-5'>Sign Up</span> 
-            </NavLink>
           </p>
+          <NavLink className="nav-link active mt-2" aria-current="page" to="/login">
+            <span className='text-primary'>SignUp</span>
+          </NavLink>
         </div>
         </form>
       </div>

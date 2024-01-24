@@ -29,7 +29,7 @@ export default function Register() {
   <div className='container row'>
     <div className='col-md-4'></div>
 
-    <div className='col-md-4 mt-5 card pt-3 pb-4 px-3 card border-info '>
+    <div className='col-md-4 mt-5 card pt-3 pb-4 px-3 card border-info'>
       <h6 className='text-center mt-4'>Create an Account</h6>
       <br/>
       <form onSubmit={handleSubmit}>
@@ -54,13 +54,14 @@ export default function Register() {
         </div>
         <br/>
         <button type="submit" className="btn btn-primary w-100">Register</button>
-        <div className="mb-3 login-link">
-          <p className='mx-5'>
+        <br/>
+        <div className="login-link fs-6 d-flex align-items-center ms-5">
+          <p className='fw-lighter text-muted mb-0 me-2 ms-5 mt-2'>
             Already have an account?
-            <NavLink className="nav-link active" aria-current="page" to="/login">
-             <span className='text-primary mx-5'>Login</span> 
-            </NavLink>
           </p>
+          <NavLink className="nav-link active mt-2" aria-current="page" to="/login">
+            <span className='text-primary'>Login</span>
+          </NavLink>
         </div>
       </form>
     </div>

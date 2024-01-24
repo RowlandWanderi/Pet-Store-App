@@ -29,7 +29,7 @@ export default function UserProvider({children})
             
             if (response.success)
             {
-                navigate("/")
+                navigate("/login")
 
                 Swal.fire({
                 position: "center",
