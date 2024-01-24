@@ -34,16 +34,16 @@ def get_all_reviews():
 @review_bp.route('/reviews', methods=['POST'])
 @jwt_required()
 def create_review():
-    data = request.form
+    data = request.get_json()
 
     # Ensure required fields are present in the request
     if 'Rating' not in data or 'Comments' not in data or 'user_id' not in data or 'pet_store_id' not in data:
         return make_response(jsonify({'error': 'Missing required fields in the request'}), 400)
 
-    Rating = data['Rating']
-    Comments = data['Comments']
+    Rating = data('Rating')
+    Comments = data('Comments')
     user_id = get_jwt_identity()
-    pet_store_id = data['pet_store_id']
+    pet_store_id = data('pet_store_id')
 
     # Check if the user and pet store exist
     user = User.query.get(user_id)
@@ -73,14 +73,14 @@ def create_review():
 @review_bp.route('/reviews/<int:review_id>', methods=['PUT'])
 @jwt_required()
 def update_review(review_id):
-    data = request.form
+    data = request.get_json()
 
     # Ensure required fields are present in the request
     if 'Rating' not in data or 'Comments' not in data:
         return make_response(jsonify({'error': 'Missing required fields in the request'}), 400)
 
-    Rating = data['Rating']
-    Comments = data['Comments']
+    Rating = data('Rating')
+    Comments = data('Comments')
 
     # Check if the review exists
     existing_review = Review.query.get(review_id)

@@ -15,6 +15,7 @@ def login():
     user = User.query.filter_by(username = username).first()
     
     if user:
+        
         if check_password_hash(user.password, password):
             access_token = create_access_token(identity = user.id)
             return jsonify(access_token = access_token)

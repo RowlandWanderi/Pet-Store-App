@@ -1,4 +1,5 @@
 import {createContext, useState, useEffect} from 'react'
+import swal from "sweetalert2"
 
 export const ReviewContext = createContext()
 
@@ -14,7 +15,7 @@ export default function ReviewProvider({children}) {
       .then((response) => {
         setReview(response);
       });
-    }, [onchange]);
+    }, []);
 
     //Create a new review for a pet store
     function addReview(Rating,Comments,user_id,pet_store_id){
@@ -70,7 +71,7 @@ export default function ReviewProvider({children}) {
       // Delete a review for a pet store
   function deleteReview(reviewId) {
   // Display a confirmation dialog using Swal.fire
-  Swal.fire({
+  swal.fire({
     title: 'Are you sure?',
     text: "You won't be able to revert this!",
     icon: 'warning',
@@ -87,7 +88,7 @@ export default function ReviewProvider({children}) {
         .then((res) => res.json())
         .then(() => {
           // Display success message
-          Swal.fire({
+          swal.fire({
             title: 'Deleted!',
             text: 'Your review has been deleted.',
             icon: 'success',
@@ -107,7 +108,7 @@ const contextData = {
     addReview,
     updateReview,
     deleteReview,
-    updateReview
+    
 
   }
   

@@ -244,5 +244,8 @@ export default function UserProvider({children})
     <UserContext.Provider value={contextData} >
        {children}
     </UserContext.Provider>
+    <UserContext.Provider value={contextData} >
+       {children}
+    </UserContext.Provider>
   )
 }

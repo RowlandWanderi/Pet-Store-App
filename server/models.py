@@ -31,12 +31,7 @@ class User(db.Model):
         return email
 
 
-    #validate the phone number to have 10 digits
-    @validates('phone_number')
-    def validate_phone_number(self, key, phone_number):
-        if not (isinstance(phone_number, int) and len(str(phone_number)) == 10):
-            raise ValueError("Invalid phone number. Must be a numeric value with 10 digits.")
-        return phone_number
+    
     
     
 #   For Logout JWT Block List
