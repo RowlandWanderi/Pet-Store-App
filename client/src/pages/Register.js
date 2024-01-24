@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react'
 import { UserContext } from '../context/UserContext'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 export default function Register() {
 
