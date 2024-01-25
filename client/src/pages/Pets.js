@@ -31,7 +31,7 @@ export default function Pets() {
           setSelectedPetstore(response);
         });
     }
-  }, [petstore]);
+  }, [petstore.id]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -45,8 +45,11 @@ export default function Pets() {
 
   return (
     <div className='container ms-2'>
-      <h1 className='text-center mt-5'>{selectedPetstore.name} Pet Store</h1>
-      <h2 className='text-center mt-5'>Pets Available</h2>
+      <div className="container">
+        <h1 className='text-center mt-5'>{selectedPetstore.name} Pet Store</h1>
+        <h2 className='text-center mt-5'>Pets Available</h2>
+      </div>
+      
       <div className='container row'>
         {selectedPetstore &&
           selectedPetstore.pets &&
@@ -69,7 +72,7 @@ export default function Pets() {
       {/* Leave a review form */}
       <div className='mt-4'>
         <h2 className='text-center mt-5'>Leave a Review</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="mx-auto">
           <div className='form-group row'>
             <label className='col-sm-2 col-form-label'>Rating</label>
             <div className='col-sm-10'>
@@ -86,19 +89,19 @@ export default function Pets() {
           <div className='form-group row'>
             <label className='col-sm-2 col-form-label'>Comments</label>
             <div className='col-sm-10'>
-              <input
-                type='text'
+              <textarea
+                
                 value={Comments}
                 onChange={(e) => setComments(e.target.value)}
                 className='form-control'
-                rows={3}
+                rows={5}
                 required
                 placeholder='Type here'
               />
             </div>
           </div>
           <div className='form-group row'>
-            <div className='col-sm-10 mt-3'>
+            <div className='col-sm-10 mt-3 text-cente'>
               {currentUser ? (
                 <button type='submit' className='btn btn-success'>
                   Submit Review
@@ -125,8 +128,11 @@ export default function Pets() {
 
                   {review && review.user && (
                     <div>
-                      <p className='card-text'>Username: {review.user.username}</p>
-                      <p className='card-text'>Email: {review.user.email}</p>
+                      <span className='fw-bold'>
+                        <p className='card-text'>Username: {review.user.username}</p>
+                        <p className='card-text'>Email: {review.user.email}</p>
+                      </span>
+                      
                       {console.log("Review",review)}
                       {currentUser && currentUser.id === review.user.id && (
                         <button
