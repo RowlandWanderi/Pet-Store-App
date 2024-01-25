@@ -15,6 +15,8 @@ def get_all_Pets():
             'image_url':pet.image_url,
             'name': pet.name,
             'age': pet.age,
+            'gender': pet.gender,
+            'price': pet.price,
         }
         pets_list.append(pet_data)
     return jsonify(pets_list), 200

@@ -32,6 +32,12 @@ def get_all_pet_stores():
                 {
                     'Rating': review.Rating,
                     'Comments': review.Comments,
+                    'user': {
+                        'id': review.user.id,
+                        'username': review.user.username,
+                        'email': review.user.email,
+                    
+                }
                 }
                 for review in petstore.reviews
             ]
@@ -60,11 +66,13 @@ def get_pet_store_by_id(petstore_id):
                 'gender': pet.gender,
                 'price': pet.price,
                 'age': pet.age,
+                'image_url':pet.image_url
             }
             for pet in petstore.pets
         ],
         'reviews': [
-            {
+            {   
+                'id': review.id,
                 'Rating': review.Rating,
                 'Comments': review.Comments,
                 'user': {

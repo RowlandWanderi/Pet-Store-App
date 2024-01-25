@@ -21,7 +21,7 @@ def get_all_reviews():
                 'username': review.user.username,
                 'email': review.user.email,
                 'phone_number': review.user.phone_number,
-            }if review.user else None
+            }
         }
         for review in reviews
     ]

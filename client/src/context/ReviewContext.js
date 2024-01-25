@@ -29,7 +29,11 @@ export default function ReviewProvider({children}) {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${authToken && authToken}`
         },
-        body: JSON.stringify({Rating,Comments,pet_store_id}),
+        body: JSON.stringify({
+          Rating: parseInt(Rating),
+          Comments,
+          pet_store_id: parseInt(pet_store_id),
+        }),
 
       })
         .then((res) => res.json())
