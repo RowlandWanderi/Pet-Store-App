@@ -52,7 +52,7 @@ export default function Register() {
         <div className="mb-3">
           <h6 className='text-center'>
             <p className='m-2'>Already have an account? </p>
-            <button>
+            <button className='btn btn-info'>
             <NavLink className="nav-link active" aria-current="page" to="/login">
               Login
             </NavLink>

@@ -227,14 +227,52 @@ function login(username, password) {
     console.log("current user", currentUser)
 
 
-    const contextData = {
+    // Reset user password
+function resetPassword(email, newPassword) {
+    fetch('/reset_password', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, new_password: newPassword }),
+    })
+      .then((res) => res.json())
+      .then((response) => {
+        if (response.success) {
+            navigate("/login")
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Password reset successful!!',
+            showConfirmButton: false,
+            timer: 2000,
+          });
+          setOnchange(!onchange);
+        } else if(response.error){
+            navigate('/login')
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: response.error,
+            showConfirmButton: false,
+            timer: 2000,
+          });
+          setOnchange(!onchange);
+        }
+      });
+  }
+  
+
+
+      const contextData = {
         addUser,
         login,
         updateUser,
         logout,
         currentUser,
-        deleteAccount
-    }
+        deleteAccount,
+        resetPassword,
+      };
 
   return (
     <UserContext.Provider value={contextData} >
