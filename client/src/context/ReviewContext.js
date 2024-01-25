@@ -21,33 +21,51 @@ export default function ReviewProvider({children}) {
 
 
 
-//Create a new review for a pet store
-    function addReview(Rating,Comments,pet_store_id){
-      fetch("/reviews", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${authToken && authToken}`
-        },
-        body: JSON.stringify({Rating,Comments,pet_store_id}),
+// Create a new review for a pet store
+function addReview(Rating, Comments, pet_store_id) {
+  const authToken = sessionStorage.getItem("authToken");
 
-      })
-        .then((res) => res.json())
-        .then(() => {
-          
-          swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Review added successfully",
-            showConfirmButton: false,
-            timer: 1500
-            });
+  fetch("/reviews", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${authToken && authToken}`,
+    },
+    body: JSON.stringify({ Rating, Comments, pet_store_id }),
+  })
+    .then((res) => {
+      // Check if the response is successful (status code 2xx)
+      if (!res.ok) {
+        throw new Error(`Failed to add review: ${res.status} ${res.statusText}`);
+      }
+      return res.json();
+    })
+    .then(() => {
+      // Display success message
+      swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Review added successfully",
+        showConfirmButton: false,
+        timer: 1500,
+      });
 
-          // After adding a new review, trigger a change to refresh the list
-          setOnchange(!onChange);
-        });
-    }
-
+      // After adding a new review, trigger a change to refresh the list
+      setOnchange(!onChange);
+    })
+    .catch((error) => {
+      // Handle errors, such as network issues or server errors
+      console.error("Error adding review:", error.message);
+      // Display an error message using Swal.fire
+      swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Failed to add review. Please try again.",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    });
+}
 
 
 

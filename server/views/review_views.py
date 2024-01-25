@@ -35,15 +35,15 @@ def get_all_reviews():
 @jwt_required()
 def create_review():
     data = request.get_json()
-
+    print("Received data:", data)
     # Ensure required fields are present in the request
     if 'Rating' not in data or 'Comments' not in data or 'user_id' not in data or 'pet_store_id' not in data:
         return make_response(jsonify({'error': 'Missing required fields in the request'}), 400)
 
-    Rating = data('Rating')
-    Comments = data('Comments')
+    Rating = data['Rating']  # Use square brackets to access dictionary values
+    Comments = data['Comments']
     user_id = get_jwt_identity()
-    pet_store_id = data('pet_store_id')
+    pet_store_id = data['pet_store_id']
 
     # Check if the user and pet store exist
     user = User.query.get(user_id)
@@ -63,13 +63,13 @@ def create_review():
         'Comments': new_review.Comments,
         'pet_store_id': new_review.pet_store_id,
         'user_id': new_review.user_id,
-
     }
 
     return make_response(jsonify(response_data), 201)
 
 
-# Update a review for a pet store
+
+#Update a review for a pet store
 @review_bp.route('/reviews/<int:review_id>', methods=['PUT'])
 @jwt_required()
 def update_review(review_id):
@@ -79,8 +79,8 @@ def update_review(review_id):
     if 'Rating' not in data or 'Comments' not in data:
         return make_response(jsonify({'error': 'Missing required fields in the request'}), 400)
 
-    Rating = data('Rating')
-    Comments = data('Comments')
+    Rating = data['Rating']
+    Comments = data['Comments']
 
     # Check if the review exists
     existing_review = Review.query.get(review_id)
@@ -89,18 +89,24 @@ def update_review(review_id):
         return make_response(jsonify({'error': 'Review not found'}), 404)
 
     else:
-        #check if the user is logged in to update the review
+        # Check if the user is logged in to update the review
         if existing_review.user_id == get_jwt_identity():
             # Update the review
             existing_review.Rating = Rating
             existing_review.Comments = Comments
             db.session.commit()
 
+            # Check if the pet store is associated with the review
+            if existing_review.pet_store:
+                pet_store_name = existing_review.pet_store.name
+            else:
+                pet_store_name = None
+
             response_data = {
                 'id': existing_review.id,
                 'Rating': existing_review.Rating,
                 'Comments': existing_review.Comments,
-                'pet_store_name': existing_review.pet_store.name,
+                'pet_store_name': pet_store_name,
                 'user_username': existing_review.user.username,
             }
 
@@ -108,8 +114,6 @@ def update_review(review_id):
         
         else:
             return jsonify({"error": "You are trying to update someone's review!"}), 404
-        
-    
 
 # Delete a review for a pet store
 @review_bp.route('/reviews/<int:review_id>', methods=['DELETE'])
