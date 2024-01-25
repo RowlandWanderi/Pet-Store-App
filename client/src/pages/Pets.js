@@ -12,9 +12,15 @@ export default function Pets() {
   const [Comments, setComments] = useState('');
   const [selectedPetstore, setSelectedPetstore] = useState('');
 
+  const [newRating, setNewRating] = useState('');
+  const [newComments, setNewComments] = useState('');
+  const [reviewID, setReviewID] = useState('');
+  
+
+
   const { petstores } = useContext(PetStoreContext);
   const { currentUser } = useContext(UserContext);
-  const { addReview, deleteReview } = useContext(ReviewContext);
+  const { addReview, deleteReview, updateReview} = useContext(ReviewContext);
 
   useEffect(() => {
     const store = petstores.find((petstore) => {
@@ -42,6 +48,16 @@ export default function Pets() {
     setRating('');
     setComments('');
   };
+
+  const handleUpdate = (e) => {
+    e.preventDefault()
+
+    updateReview(reviewID,newRating,newComments,)
+
+    setNewRating('')
+    setNewComments('')
+    
+  }
 
   return (
     <div className='container ms-2'>
@@ -129,19 +145,72 @@ export default function Pets() {
                   {review && review.user && (
                     <div>
                       <span className='fw-bold'>
-                        <p className='card-text'>Username: {review.user.username}</p>
-                        <p className='card-text'>Email: {review.user.email}</p>
+                        <p className='card-text'>Reviewed by: {review.user.username}</p>
+                        <p className='card-text'>User email: {review.user.email}</p>
                       </span>
                       
                       {console.log("Review",review)}
                       {currentUser && currentUser.id === review.user.id && (
-                        <button
-                        onClick={() => deleteReview(review.id)}
-                          type='button'
-                          className='btn btn-danger btn-sm'
-                        >
-                          Delete Review
-                        </button>
+                        <div className='container'>
+                          <p className='mt-2'>
+                            <button className="btn btn-primary btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                              Edit
+                            </button>
+                          </p>
+                          <button
+                          onClick={() => deleteReview(review.id)}
+                            type='button'
+                            className='btn btn-danger btn-sm'
+                          >
+                            Delete Review
+                          </button>
+                          <div className="collapse " id="collapseExample">
+                          <form onSubmit={handleUpdate} className="mx-auto">
+                            <div className='form-group row'>
+                              <label className='col-sm-2 col-form-label'>Rating</label>
+                              <div className='col-sm-10'>
+                                <input
+                                  type='number'
+                                  value={newRating}
+                                  onChange={(e) => setNewRating(e.target.value)}
+                                  className='form-control'
+                                  required
+                                  placeholder='Type here'
+                                />
+                              </div>
+                            </div>
+                            <div className='form-group row'>
+                              <label className='col-sm-2 col-form-label'>Comments</label>
+                              <div className='col-sm-10'>
+                                <textarea
+                                  
+                                  value={newComments}
+                                  onChange={(e) => setNewComments(e.target.value)}
+                                  className='form-control'
+                                  rows={5}
+                                  required
+                                  placeholder='Type here'
+                                />
+                              </div>
+                            </div>
+                            <div className='form-group row'>
+                              <div className='col-sm-10 mt-3 text-cente'>
+                                {currentUser ? (
+                                  <button 
+                                  onClick={() => setReviewID(review.id)}
+                                  type='submit' className='btn btn-success'>
+                                    Update Review
+                                  </button>
+                                ) : (
+                                  <p className='text-secondary'>Login to submit a Review</p>
+                                )}
+                              </div>
+                            </div>
+                          </form>
+                          </div>
+                        </div>
+                        
+                        
                       )}
                     </div>
                   )}
