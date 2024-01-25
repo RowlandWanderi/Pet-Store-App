@@ -62,7 +62,7 @@ The Pet Store Application is an engaging web-based platform that brings the joy 
 
 # Known Bugs
 
-- After posting a review and deleting a review, you have to refresh the home page to see the changes. It needs corrections.
+- The petstore app works perfectly.
 
 # Technologies Used
 

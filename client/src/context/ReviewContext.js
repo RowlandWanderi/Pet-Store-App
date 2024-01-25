@@ -1,5 +1,6 @@
 import {createContext, useState, useEffect} from 'react'
 import swal from "sweetalert2"
+import {useNavigate} from "react-router-dom"
 
 export const ReviewContext = createContext()
 
@@ -9,6 +10,8 @@ export default function ReviewProvider({children}) {
   const [onChange, setOnchange] = useState(false)
 
   const authToken = sessionStorage.getItem("authToken")
+
+  const navigate = useNavigate()
 
   // fetch reviews
   useEffect(() => {
@@ -38,7 +41,7 @@ export default function ReviewProvider({children}) {
       })
         .then((res) => res.json())
         .then(() => {
-          
+          navigate("/")
           swal.fire({
             position: "top-end",
             icon: "success",
@@ -68,6 +71,8 @@ export default function ReviewProvider({children}) {
       .then((res) => res.json())
       .then(() => {
         // Display success message
+
+        navigate("/")
         swal.fire({
           position: 'top-end',
           icon: 'success',
@@ -109,6 +114,8 @@ export default function ReviewProvider({children}) {
         .then((res) => res.json())
         .then((response) => {
           if(response.success){ 
+
+          navigate("/")
           // Display success message
           swal.fire({
             title: 'Deleted!',
