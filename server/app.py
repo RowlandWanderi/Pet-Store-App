@@ -7,6 +7,7 @@ from flask_jwt_extended import JWTManager
 import random
 import string
 from views import *
+from gevent.pywsgi import WSGIServer
 
 def generate_secret_key(length=32):
     characters = string.ascii_letters + string.digits
@@ -39,5 +40,8 @@ def token_in_blocklist_callback(jwt_header, jwt_data):
         return None
     
 if __name__ == '__main__':
-    from waitress import serve
-    app.run(port=5000, debug=True)
+    # Debug/Development
+    # app.run(debug=True, host="0.0.0.0", port="5000")
+    # Production
+    http_server = WSGIServer(('', 5000), app)
+    http_server.serve_forever()
