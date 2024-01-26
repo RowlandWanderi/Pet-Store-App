@@ -20,7 +20,7 @@ export default function ReviewProvider({children}) {
       .then((response) => {
         setReview(response);
       });
-    }, []);
+    }, [onChange]);
 
 
 
@@ -41,7 +41,7 @@ export default function ReviewProvider({children}) {
       })
         .then((res) => res.json())
         .then(() => {
-          navigate("/")
+          navigate(`/pets/${pet_store_id}`)
           swal.fire({
             position: "top-end",
             icon: "success",

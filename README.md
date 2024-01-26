@@ -22,7 +22,7 @@ The Pet Store Application is an engaging web-based platform that brings the joy 
 ## Setup Instructions
 
 1. **Clone the repository:**
-
+ - clone this repo from github and cd into the cloned directory using vs code
     ```bash
     `git clone https://github.com/your-username/pet-store-app.git`
     `cd pet-store-app` 
@@ -30,29 +30,24 @@ The Pet Store Application is an engaging web-based platform that brings the joy 
     ```
 
 2. **Install dependencies and run backend:**
+- install the dependencies and packages required to run the server . in the terminal enter:
 
     ```bash
     `pipenv install`
     `pipenv shell`
-    `cd client` 
+    `cd server` 
     `flask --debug run`
     ```
 
 
 3. **Run the application:**
-
+- open a new terminal and then enter the following to install packages and start the front end:
     ```bash
      `cd client` 
     `npm install`
     `npm start`
     ```
 
-    In a separate terminal:
-
-    ```bash
-    `cd frontend
-    npm start` 
-    ```
 
     Access the application at `http://localhost:3000`.
 

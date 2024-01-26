@@ -26,6 +26,7 @@ sqlalchemy = "*"
 sqlalchemy-serializer = "*"
 flask-jwt-extended = "*"
 datetime = "*"
+waitress = "*"
 
 [dev-packages]
 
