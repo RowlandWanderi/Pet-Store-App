@@ -25,4 +25,4 @@ SQLAlchemy==2.0.25
 typing-extensions==4.9.0
 werkzeug==3.0.1
 zipp==3.17.0
-pip==ginstall waitress
+waitress==2.1.0
