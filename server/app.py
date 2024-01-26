@@ -14,7 +14,7 @@ def generate_secret_key(length=32):
     return secret_key
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:https://petstrore.onrender.com/"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.sqlite"
 db.init_app(app)
 migrate = Migrate(app, db)
 
