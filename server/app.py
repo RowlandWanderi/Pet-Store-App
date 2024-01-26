@@ -39,4 +39,5 @@ def token_in_blocklist_callback(jwt_header, jwt_data):
         return None
     
 if __name__ == '__main__':
+    from waitress import serve
     app.run(port=5000, debug=True)
