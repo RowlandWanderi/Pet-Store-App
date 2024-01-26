@@ -6,7 +6,6 @@ from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
 import random
 import string
-
 from views import *
 
 def generate_secret_key(length=32):
@@ -40,5 +39,4 @@ def token_in_blocklist_callback(jwt_header, jwt_data):
         return None
     
 if __name__ == '__main__':
-    from waitress import serve
-    serve(app, host="0.0.0.0", port=5000)
+    app.run(port=5000, debug=True)

@@ -65,6 +65,7 @@ export default function Home() {
           // Display search results
           searchResults.map((petstore) => (
             <div key={petstore.id} className='row border-bottom p-3 bg-white mt-3'>
+              
               <div className='col-md-3 d-flex flex-column'>
                 <img src={image} alt="loading"/>
               </div>
@@ -87,6 +88,7 @@ export default function Home() {
           // Display all pet stores if no search results
           petstores.map((petstore) => (
             <div key={petstore.id} className='row border-bottom p-3 bg-white mt-3'>
+              {console.log(petstore)}
               <div className='col-md-3 d-flex flex-column'>
                 <img src={image} alt="loading"/>
               </div>

@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { PetContext } from '../context/PetContext'
 
 export default function SinglePet() {
@@ -13,7 +13,7 @@ export default function SinglePet() {
       return singlePet.id === parseInt(id)
     })
     setSinglePet(animal)
-  }, [id,singlePet])
+  }, [id,pets])
 
   return (
     <div className='container'>
