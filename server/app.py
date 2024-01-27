@@ -4,7 +4,8 @@ from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
-import os
+from flask_cors import CORS
+
 import random
 import string
 from views import *
@@ -15,7 +16,9 @@ def generate_secret_key(length=32):
     return secret_key
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DATABASE_URI')
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://pet_haven_iali_user:ecnYv8xp60Ky5RcITYRRtiViSj8GEIe1@dpg-cmqc4emg1b2c73d4u670-a.oregon-postgres.render.com/pet_haven_iali"
+
+CORS(app)
 
 
 db.init_app(app)
