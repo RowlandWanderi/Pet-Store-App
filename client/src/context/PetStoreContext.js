@@ -10,7 +10,7 @@ export default function PetStoreProvider({children}) {
 
   //fetch pet stores
   useEffect(()=>{
-    fetch('/petstores')
+    fetch('https://pet-haven-app.onrender.com/petstores')
     .then(res => res.json())
     .then(response =>{
         setPetstores(response)

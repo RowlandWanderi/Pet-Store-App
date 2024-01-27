@@ -15,7 +15,7 @@ export default function ReviewProvider({children}) {
 
   // fetch reviews
   useEffect(() => {
-    fetch("/reviews")
+    fetch("https://pet-haven-app.onrender.com/reviews")
       .then((res) => res.json())
       .then((response) => {
         setReview(response);
@@ -26,7 +26,7 @@ export default function ReviewProvider({children}) {
 
 //Create a new review for a pet store
     function addReview(Rating,Comments,pet_store_id){
-      fetch("/reviews", {
+      fetch("https://pet-haven-app.onrender.com/reviews", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -41,9 +41,9 @@ export default function ReviewProvider({children}) {
       })
         .then((res) => res.json())
         .then(() => {
-          navigate(`/pets/${pet_store_id}`)
+          navigate(`/`)
           swal.fire({
-            position: "top-end",
+            position: "center",
             icon: "success",
             title: "Review added successfully",
             showConfirmButton: false,
@@ -60,7 +60,7 @@ export default function ReviewProvider({children}) {
 
 // Update a review for a pet store
   function updateReview(reviewId, newRating, newComments) {
-    fetch(`/reviews/${reviewId}`, {
+    fetch(`https://pet-haven-app.onrender.com/reviews/${reviewId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -104,7 +104,7 @@ export default function ReviewProvider({children}) {
   }).then((result) => {
     if (result.isConfirmed) {
       // If user confirms, proceed to delete the review
-      fetch(`/reviews/${reviewId}`, {
+      fetch(`https://pet-haven-app.onrender.com/reviews/${reviewId}`, {
         method: 'DELETE',
         headers: {
           "Content-Type": "application/json",

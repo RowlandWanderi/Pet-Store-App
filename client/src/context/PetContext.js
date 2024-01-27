@@ -10,7 +10,7 @@ export default function PetProvider({ children }) {
 
     useEffect(() => {
         console.log('Fetching pets...');
-        fetch('/pets')
+        fetch('https://pet-haven-app.onrender.com/pets')
             .then((response) => response.json())
             .then((data) => {
                 console.log('Fetched pets:', data);
@@ -21,7 +21,7 @@ export default function PetProvider({ children }) {
 
     const fetchPetById = (id) => {
         console.log(`Fetching pet with ID ${id}...`);
-        fetch(`/pets/${id}`)
+        fetch(`https://pet-haven-app.onrender.com/pets/${id}`)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);

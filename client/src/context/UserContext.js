@@ -17,7 +17,7 @@ export default function UserProvider({children})
     // add user
     function addUser(username, email, phone_number, password)
     {
-        fetch("/register",{
+        fetch("https://pet-haven-app.onrender.com/register",{
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -60,7 +60,7 @@ export default function UserProvider({children})
         // Update user
         function updateUser(username,email,phone_number,profile_image_url)
         {
-            fetch("/users",{
+            fetch("https://pet-haven-app.onrender.com/users",{
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -102,7 +102,7 @@ export default function UserProvider({children})
     // login user
     // login user
 function login(username, password) {
-    fetch("/login", {
+    fetch("https://pet-haven-app.onrender.com/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -141,7 +141,7 @@ function login(username, password) {
         // DELETE  user account
         function deleteAccount()
         {
-            fetch("/users",{
+            fetch("https://pet-haven-app.onrender.com/users",{
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
@@ -201,7 +201,7 @@ function login(username, password) {
     // Get Authenticated user
     useEffect(() => {
         if (authToken) {
-            fetch("/authenticated_user", {
+            fetch("https://pet-haven-app.onrender.com/authenticated_user", {
                 method: "GET",
                 headers: {
                     Accept: "application/json",
@@ -229,7 +229,7 @@ function login(username, password) {
 
     // Reset user password
 function resetPassword(email, newPassword) {
-    fetch('/reset_password', {
+    fetch('https://pet-haven-app.onrender.com/reset_password', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

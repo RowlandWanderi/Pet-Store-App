@@ -33,7 +33,7 @@ export default function Pets() {
 
   useEffect(() => {
     if (petstore.id) {
-      fetch(`/petstores/${petstore.id}`)
+      fetch(`https://pet-haven-app.onrender.com/petstores/${petstore.id}`)
         .then((res) => res.json())
         .then((response) => {
           setSelectedPetstore(response);

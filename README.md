@@ -51,6 +51,9 @@ The Pet Store Application is an engaging web-based platform that brings the joy 
 
     Access the application at `http://localhost:3000`.
 
+
+    or to view the fully functional deployed website, just visit `https://jovial-creponne-97cf89.netlify.app`
+
 ## Testing
  
 - To test all our deliverables just run the app and test its functionality.
