@@ -4,6 +4,7 @@ from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
+import os
 import random
 import string
 from views import *
@@ -14,7 +15,9 @@ def generate_secret_key(length=32):
     return secret_key
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.sqlite"
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DATABASE_URI')
+
+
 db.init_app(app)
 migrate = Migrate(app, db)
 

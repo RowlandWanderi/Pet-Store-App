@@ -75,7 +75,7 @@ def seed_data():
         for _ in range(10):
             user = User(username=fake.name(),
                         email=fake.email(),
-                        phone_number=fake.random_int(min=1000000000, max=9999999999),
+                        phone_number=fake.random_int(min=10000, max=99999),
                         password=fake.password(),
                         profile_image_url=fake.image_url(),
                         )
@@ -88,7 +88,7 @@ def seed_data():
         for _ in range(5):
             pet_store = PetStore(name=fake.company(),
                                  location=fake.address(),
-                                 phone_number=fake.random_int(min=1000000000, max=9999999999),
+                                 phone_number=fake.random_int(min=10000, max=99999),
                                  email=fake.company_email(),
                                  )
             pet_stores.append(pet_store)
